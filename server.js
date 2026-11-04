@@ -21,10 +21,6 @@ app.get('/', (req, res) => {
     });
 });
 
-app.use('/api/blog', blogRoutes)
-app.use('/api/category', categoryRoutes)
-app.use('/api/auth', authRoutes);
-
 app.use(async (req, res, next) => {
     try {
         await connectDB();
@@ -36,5 +32,11 @@ app.use(async (req, res, next) => {
         });
     }
 });
+
+app.use('/api/blog', blogRoutes)
+app.use('/api/category', categoryRoutes)
+app.use('/api/auth', authRoutes);
+
+
 
 module.exports = app;
