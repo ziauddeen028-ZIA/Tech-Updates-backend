@@ -2,9 +2,9 @@ const Blog = require('../models/Blog');
 
 const createBlog = async (req, res) => {
     try {
-        const { title, description, slug, category, content, image, author, publishedAt, readTime, status } = req.body;
+        const { title, description, slug, category, content, image, author, publishedAt, readTime, status, isFeatured, isTrending, isPopular, isLatest } = req.body;
         const blog = new Blog({
-            title, description, slug, content, image, author, publishedAt, readTime, status, category
+            title, description, slug, content, image, author, publishedAt, readTime, status, category, isFeatured, isTrending, isPopular, isLatest
         });
         const newBlog = await blog.save();
         res.status(201).json(newBlog);
@@ -99,5 +99,5 @@ const deleteBlog = async (req, res) => {
 
 
 module.exports = {
-    createBlog, getBlog, getBlogById, updateBlog, deleteBlog,getBlogBySlug
+    createBlog, getBlog, getBlogById, updateBlog, deleteBlog, getBlogBySlug
 }
