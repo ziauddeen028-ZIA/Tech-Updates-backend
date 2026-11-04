@@ -9,7 +9,7 @@ const cors = require('cors');
 
 
 const app = express();
-app.use(express.json());
+
 app.use(express.json());
 app.use(cors({
     origin: 'http://localhost:5173'
@@ -23,13 +23,11 @@ const startServer = async () => {
     try {
         await connectDB();
 
-        app.listen(process.env.PORT || 8000, () => {
-            console.log("Server is Running");
-        });
-
     } catch (error) {
         console.log("Server startup failed:", error.message);
     }
 };
 
 startServer();
+
+module.exports = app;
