@@ -38,11 +38,26 @@ const blogSchema = new mongoose.Schema({
         required: true,
         enum: ["draft", "published"]
     },
-    category:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Category',
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+    }, 
+    isFeatured: {
+        type: Boolean,
+        default: false
+    }, 
+    isTrending: {
+        type: Boolean,
+        default: false
+    },
+    isPopular: {
+        type: Boolean,
+        default: false
+    },
+    isLatest: {
+        type: Boolean,
+        default: false
     }
-
 }, {
     timestamps: true,
 })
