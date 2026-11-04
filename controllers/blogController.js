@@ -2,9 +2,9 @@ const Blog = require('../models/Blog');
 
 const createBlog = async (req, res) => {
     try {
-        const { title, description, slug,category, content, image, author, publishedAt, readTime, status } = req.body;
+        const { title, description, slug, category, content, image, author, publishedAt, readTime, status } = req.body;
         const blog = new Blog({
-            title, description, slug, content, image, author, publishedAt, readTime, status,category
+            title, description, slug, content, image, author, publishedAt, readTime, status, category
         });
         const newBlog = await blog.save();
         res.status(201).json(newBlog);
@@ -33,6 +33,27 @@ const getBlogById = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+
+const getBlogBySlug = async (req, res) => {
+    try {
+        const blog = await Blog.findOne({
+            slug: req.params.slug
+        }).populate('category');
+
+        if (!blog) {
+            return res.status(404).json({
+                message: "Blog not found"
+            });
+        }
+
+        res.status(200).json(blog);
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
 
 const updateBlog = async (req, res) => {
     try {
@@ -78,5 +99,5 @@ const deleteBlog = async (req, res) => {
 
 
 module.exports = {
-    createBlog, getBlog, getBlogById, updateBlog, deleteBlog
+    createBlog, getBlog, getBlogById, updateBlog, deleteBlog,getBlogBySlug
 }
