@@ -2,9 +2,9 @@ const Blog = require('../models/Blog');
 
 const createBlog = async (req, res) => {
     try {
-        const { title, description, slug, content, image, author, publishedAt, readTime, status } = req.body;
+        const { title, description, slug,category, content, image, author, publishedAt, readTime, status } = req.body;
         const blog = new Blog({
-            title, description, slug, content, image, author, publishedAt, readTime, status
+            title, description, slug, content, image, author, publishedAt, readTime, status,category
         });
         const newBlog = await blog.save();
         res.status(201).json(newBlog);
@@ -15,7 +15,7 @@ const createBlog = async (req, res) => {
 
 const getBlog = async (req, res) => {
     try {
-        const blog = await Blog.find();
+        const blog = await Blog.find().populate('category');
         res.json(blog);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -24,7 +24,7 @@ const getBlog = async (req, res) => {
 
 const getBlogById = async (req, res) => {
     try {
-        const blog = await Blog.findById(req.params.id);
+        const blog = await Blog.findById(req.params.id).populate('category');
         if (!blog) {
             return res.status(404).json({ message: "Blog not found" });
         }
@@ -44,6 +44,7 @@ const updateBlog = async (req, res) => {
         blog.title = req.body.title || blog.title;
         blog.description = req.body.description || blog.description;
         blog.slug = req.body.slug || blog.slug;
+        blog.category = req.body.category || blog.category;
         blog.content = req.body.content || blog.content;
         blog.image = req.body.image || blog.image;
         blog.author = req.body.author || blog.author;
