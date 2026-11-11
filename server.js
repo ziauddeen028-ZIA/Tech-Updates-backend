@@ -12,7 +12,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-    origin: 'https://tech-updates-frontend-wine.vercel.app'
+    origin: ['https://tech-updates-frontend-wine.vercel.app','http://localhost:5173']
 }));
 
 app.get('/', (req, res) => {
