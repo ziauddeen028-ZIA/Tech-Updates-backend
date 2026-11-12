@@ -7,8 +7,10 @@ const createBlog = async (req, res) => {
             title, description, slug, content, image, author, publishedAt, readTime, status, category, isFeatured, isTrending, isPopular, isLatest
         });
         const newBlog = await blog.save();
+        console.log("BLOG SAVED:", newBlog._id);
         res.status(201).json(newBlog);
     } catch (error) {
+        console.error("CREATE BLOG ERROR:", error);
         res.status(500).json({ message: error.message });
     }
 }
